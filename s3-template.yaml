@@ -1,5 +1,10 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "Cloudformation Template of S3 bucket"
+Description: "S3 + EC2 template"
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t2.micro
 
 Resources:
   MyS3Bucket:
@@ -7,8 +12,16 @@ Resources:
     Properties:
       BucketName: my-s3-bucket-2025-09-07
 
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: ami-1234567890abcdef0
+
 Outputs:
   BucketName:
     Description: "Name of the S3 bucket"
     Value: !Ref MyS3Bucket
-
+  EC2InstanceId:
+    Description: "EC2 Instance ID"
+    Value: !Ref MyEC2Instance
