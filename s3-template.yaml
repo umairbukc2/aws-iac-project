@@ -1,27 +1,51 @@
-AWSTemplateFormatVersion: "2010-09-09"
-Description: "S3 + EC2 template"
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  CloudFormation template to deploy:
+  - S3 Static Website
+  - Custom VPC
+  - Optional EC2 Instance
 
 Parameters:
   InstanceType:
     Type: String
     Default: t2.micro
+    Description: EC2 instance type
 
 Resources:
+ 
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: MyCustomVPC
+
+  
   MyS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: my-s3-bucket-2025-09-07
+      BucketName: !Sub my-static-site-${AWS::AccountId}
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+      Tags:
+        - Key: Name
+          Value: MyStaticWebsiteBucket
+
 
   MyEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
-      ImageId: ami-0009f0c4964e4e0f9
+      ImageId: ami-0009f0c4964e4e0f9  
+      Tags:
+        - Key: Name
+          Value: MyEC2Instance
 
 Outputs:
-  BucketName:
-    Description: "Name of the S3 bucket"
-    Value: !Ref MyS3Bucket
-  EC2InstanceId:
-    Description: "EC2 Instance ID"
-    Value: !Ref MyEC2Instance
+  WebsiteURL:
+    Description: S3 Static Website URL
+    Value: !GetAtt MyS3Bucket.WebsiteURL
