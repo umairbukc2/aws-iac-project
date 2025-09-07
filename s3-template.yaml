@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: "2025-09-07"
+Description: "Cloudformation Template of S3 bucket"
+
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-s3-bucket-2025-09-07
+
+Outputs:
+  BucketName:
+    Description: "Name of the S3 bucket"
+    Value: !Ref MyS3Bucket
+
