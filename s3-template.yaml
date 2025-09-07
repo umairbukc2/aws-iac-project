@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2025-09-07"
+AWSTemplateFormatVersion: "2010-09-09"
 Description: "Cloudformation Template of S3 bucket"
 
 Resources:
