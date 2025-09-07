@@ -16,7 +16,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
-      ImageId: ami-1234567890abcdef0
+      ImageId: ami-0009f0c4964e4e0f9
 
 Outputs:
   BucketName:
